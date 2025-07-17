@@ -1,5 +1,5 @@
 import Image from "next/image";
 
 export default function Home() {
-  return <div className="">Claude POC Next.js</div>;
+  return <div className="">Hello World</div>;
 }
