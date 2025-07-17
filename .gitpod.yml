@@ -1,0 +1,23 @@
+image:
+  file: .gitpod.Dockerfile
+
+tasks:
+  - name: Setup & Start Dev
+    command: |
+      pnpm install
+      pip3 install --user -r requirements.txt
+      chmod +x start_servers.sh
+      ./start_servers.sh
+
+ports:
+  - port: 5173
+    onOpen: open-preview
+    visibility: public
+  - port: 8000
+    onOpen: ignore
+    visibility: public
+    description: Claude Code SDK Server
+  - port: 3000
+    onOpen: ignore
+    visibility: public
+    description: Next.js Development Server
