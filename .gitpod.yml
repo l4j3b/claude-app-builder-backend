@@ -4,7 +4,7 @@ image:
 tasks:
   - name: Setup & Start Dev
     command: |
-      cd base_app && pnpm install && cd ..
+      cd app && pnpm install && cd ..
       pip3 install --user -r ./code_api/requirements.txt
       chmod +x start_servers.sh
       ./start_servers.sh

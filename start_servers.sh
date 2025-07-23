@@ -6,7 +6,7 @@ cd code_api && python3 claude_server.py &
 CLAUDE_PID=$!
 
 echo "Starting Next.js development server on port 3000..."
-cd base_app && npm run dev &
+cd app && npm run dev &
 NEXTJS_PID=$!
 
 echo "Both servers started!"
