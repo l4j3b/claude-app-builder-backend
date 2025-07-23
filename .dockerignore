@@ -1,0 +1,3 @@
+next_app/node_modules
+code_api/__pycache__
+*.env
