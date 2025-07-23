@@ -76,7 +76,7 @@ class ClaudeResponse(BaseModel):
     messages: List[Any]
     status: str
 
-@app.post("/claude", response_model=ClaudeResponse)
+@app.post("/code", response_model=ClaudeResponse)
 async def claude_endpoint(request: ClaudeRequest):
     """
     Expose Claude Code SDK with proper permissions for code modification
@@ -117,7 +117,7 @@ async def claude_endpoint(request: ClaudeRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.post("/claude/stream")
+@app.post("/code/stream")
 async def claude_stream(request: ClaudeRequest):
     """
     Streaming endpoint for Claude Code SDK responses
@@ -161,7 +161,7 @@ async def claude_stream(request: ClaudeRequest):
 
     return StreamingResponse(generate(), media_type="text/plain")
 
-@app.get("/claude/health")
+@app.get("/code/health")
 async def health_check():
     """Health check endpoint"""
     return {"status": "healthy", "cwd": str(Path.cwd())}

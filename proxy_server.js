@@ -5,11 +5,10 @@ const app = express();
 
 // Proxy Claude API
 app.use(
-  "/claude",
+  "/code-api",
   createProxyMiddleware({
     target: "http://localhost:8000",
     changeOrigin: true,
-    pathRewrite: { "^/claude": "" },
   })
 );
 
@@ -17,7 +16,7 @@ app.use(
 app.use(
   "/",
   createProxyMiddleware({
-    target: "http://localhost:3000",
+    target: "http://localhost:3001",
     changeOrigin: true,
   })
 );

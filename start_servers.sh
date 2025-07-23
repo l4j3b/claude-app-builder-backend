@@ -26,11 +26,24 @@
 
 #!/bin/bash
 
+echo "Starting Python API on port 8000..."
 cd /app/code_api && python3 server.py &
 CLAUDE_PID=$!
 
-cd /app/next_app && pnpm dev --port 3000 &
+echo "Starting Next.js app on port 3001..."
+cd /app/next_app && pnpm dev --port 3001 &
 NEXTJS_PID=$!
 
-trap "kill $CLAUDE_PID $NEXTJS_PID" INT
+echo "Waiting for services to start..."
+sleep 5
+
+echo "Checking if services are running..."
+curl -f http://localhost:8000/code/health || echo "Python API not responding on port 8000"
+curl -f http://localhost:3001 || echo "Next.js app not responding on port 3001"
+
+echo "Starting proxy server on port 3000..."
+node /app/proxy_server.js &
+PROXY_PID=$!
+
+trap "kill $CLAUDE_PID $NEXTJS_PID $PROXY_PID" INT
 wait

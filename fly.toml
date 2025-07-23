@@ -17,10 +17,6 @@ primary_region = "atl"
   processes = ["app"]
 
   [[http_service.ports]]
-    handlers = ["http"]
-    port = 80
-
-  [[http_service.ports]]
     handlers = ["tls", "http"]
     port = 443
 
@@ -29,7 +25,7 @@ primary_region = "atl"
     timeout = "5s"
     grace_period = "5s"
     method = "get"
-    path = "/claude/health"
+    path = "/code-api/code/health"
     protocol = "http"
     restart_limit = 0
 

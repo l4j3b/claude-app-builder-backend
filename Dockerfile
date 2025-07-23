@@ -1,32 +1,32 @@
-FROM python:3.11-slim AS python-builder
-
-WORKDIR /build
-
-# Install Claude Python deps
-COPY code_api/requirements.txt ./code_api/requirements.txt
-RUN pip install --upgrade pip && \
-    pip install --prefix=/python-packages -r code_api/requirements.txt
-
-COPY code_api/ ./code_api/
-
-
-FROM node:20-slim
-
-COPY --from=python-builder /python-packages /usr/local
-COPY --from=python-builder /build/code_api /app/code_api
+FROM python:3.11-slim
 
 WORKDIR /app
 
 COPY next_app/ ./next_app
+COPY code_api/ ./code_api
 COPY start_servers.sh ./
 COPY proxy_server.js ./
 
-# Install Node tooling, Claude CLI, and reverse proxy dependencies
+# Set CI environment for faster npm installs
 ENV CI=true
-RUN npm install -g pnpm @anthropic-ai/claude-code && \
-    npm install express http-proxy-middleware && \
-    cd next_app && pnpm install
+
+# Install Node.js 20 and system dependencies
+RUN apt-get update && apt-get install -y curl && \
+    curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs
+
+# Install Python dependencies for Claude API
+RUN pip install --no-cache-dir -r code_api/requirements.txt
+
+# Install Node.js global tools
+RUN npm install -g pnpm @anthropic-ai/claude-code
+
+# Install proxy server dependencies
+RUN npm install express http-proxy-middleware
+
+# Install Next.js app dependencies
+RUN cd next_app && pnpm install
 
 EXPOSE 3000
 
-CMD ["node", "proxy_server.js"]
+CMD ["bash", "start_servers.sh"]
