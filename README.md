@@ -2,16 +2,25 @@
 
 Deploying Claude Code + Next.js dev app on Fly.io
 
-## STEP 0: Prerequisites
+## Prerequisites
 
+```bash
+# Install Fly CLI
 curl -L <https://fly.io/install.sh> | sh
 export PATH="$HOME/.fly/bin:$PATH"
+```
 
 ## Log into Fly
 
+Create a Fly account if you haven't: <https://fly.io>
+
+```bash
+# Login
 fly auth login
 
-Create a Fly account if you haven't: <https://fly.io>
+# Set the Anthropic API key
+fly secrets set ANTHROPIC_API_KEY="sk-ant-apiXXXXXXXXXX"
+```
 
 ## Project structure
 
@@ -26,5 +35,7 @@ Create a Fly account if you haven't: <https://fly.io>
 
 ## Launch the app
 
+```bash
 fly launch --name claude-app-builder --no-deploy
 fly deploy
+```
