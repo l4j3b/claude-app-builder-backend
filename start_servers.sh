@@ -2,7 +2,7 @@
 # Start both Next.js and Claude Code servers
 
 echo "Starting Claude Code Server on port 8000..."
-cd code_api && python3 claude_server.py &
+cd code_api && python3 server.py &
 CLAUDE_PID=$!
 
 echo "Starting Next.js development server on port 3000..."
