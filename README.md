@@ -39,3 +39,10 @@ fly secrets set ANTHROPIC_API_KEY="sk-ant-apiXXXXXXXXXX"
 fly launch --name claude-app-builder --no-deploy
 fly deploy
 ```
+
+## Check the app
+
+```bash
+fly status
+fly logs
+```
