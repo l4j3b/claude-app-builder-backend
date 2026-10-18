@@ -2,9 +2,24 @@
 
 > **Archived.** Built in July 2025 as a proof of concept and kept here as a record. It is not maintained and does not run as-is today: the model the API requests has been retired and the Fly.io app has been deleted.
 >
-> The [first version](https://github.com/l4j3b/claude-app-builder-backend/tree/2797d56331d8b45b3c6417faafdcfbdf4d204063) ran in a Gitpod workspace, with `/claude/*` endpoints, the Next.js app in `base_app/`, and a `.gitpod.yml` setup. Later commits renamed the endpoints to `/code/*`, added a front-end system prompt, and replaced the Gitpod workspace with a single Fly.io machine: a Docker image runs the FastAPI server around the Claude Code SDK (`code_api/`, port 8000), the Next.js app Claude edits (`next_app/`, port 3001), and an Express reverse proxy on port 3000 that serves the app at `/` and the API at `/code-api`. A GitHub Actions workflow deployed it on every push to `main`. The UI that called the API is [`claude-app-builder-frontend`](https://github.com/l4j3b/claude-app-builder-frontend).
->
 > The API has no authentication and lets Claude run shell commands. Don't deploy it as-is.
+
+## Part of Claude App Builder
+
+Claude App Builder was a Lovable-style prompt-to-app tool made of two repos that worked together:
+
+| Repo | Role | Ran on |
+| --- | --- | --- |
+| [`claude-app-builder-frontend`](https://github.com/l4j3b/claude-app-builder-frontend) | The builder UI: a chat panel that streams Claude's messages (text, tool calls with their commands and file paths, tool results, and the final turn count, duration and cost) next to an iframe with a live preview of the app being built | Vercel |
+| `claude-app-builder-backend` (this repo) | The Claude Code API (FastAPI around the Claude Code SDK) and the Next.js app that Claude edits | Gitpod, then Fly.io |
+
+A prompt typed in the frontend goes to this repo's streaming endpoint. Claude Code edits the Next.js app here, and the frontend's preview iframe, pointed at that app's dev server, shows the change.
+
+## How this repo evolved
+
+The [first version](https://github.com/l4j3b/claude-app-builder-backend/tree/2797d56331d8b45b3c6417faafdcfbdf4d204063) ran in a Gitpod workspace, with `/claude/*` endpoints, the Next.js app in `base_app/`, and a `.gitpod.yml` setup. That is the version the frontend's code calls. Later commits renamed the endpoints to `/code/*`, added a front-end system prompt, and replaced the Gitpod workspace with a single Fly.io machine: a Docker image runs the FastAPI server around the Claude Code SDK (`code_api/`, port 8000), the Next.js app Claude edits (`next_app/`, port 3001), and an Express reverse proxy on port 3000 that serves the app at `/` and the API at `/code-api`. A GitHub Actions workflow deployed it on every push to `main`.
+
+## Original deploy notes
 
 Deploying Claude Code + Next.js dev app on Fly.io
 
