@@ -1,8 +1,8 @@
-# Next.js + Claude Code + Fly.io
+# Claude App Builder: backend
 
 > **Archived.** Built in July 2025 as a proof of concept and kept here as a record. It is not maintained and does not run as-is today: the model the API requests has been retired and the Fly.io app has been deleted.
 >
-> The [first version](https://github.com/l4j3b/loveable-hack-backend/tree/2797d56331d8b45b3c6417faafdcfbdf4d204063) ran in a Gitpod workspace, with `/claude/*` endpoints, the Next.js app in `base_app/`, and a `.gitpod.yml` setup. Later commits renamed the endpoints to `/code/*`, added a front-end system prompt, and replaced the Gitpod workspace with a single Fly.io machine: a Docker image runs the FastAPI server around the Claude Code SDK (`code_api/`, port 8000), the Next.js app Claude edits (`next_app/`, port 3001), and an Express reverse proxy on port 3000 that serves the app at `/` and the API at `/code-api`. A GitHub Actions workflow deployed it on every push to `main`. The UI that called the API is [`loveable-hack-frontend`](https://github.com/l4j3b/loveable-hack-frontend).
+> The [first version](https://github.com/l4j3b/claude-app-builder-backend/tree/2797d56331d8b45b3c6417faafdcfbdf4d204063) ran in a Gitpod workspace, with `/claude/*` endpoints, the Next.js app in `base_app/`, and a `.gitpod.yml` setup. Later commits renamed the endpoints to `/code/*`, added a front-end system prompt, and replaced the Gitpod workspace with a single Fly.io machine: a Docker image runs the FastAPI server around the Claude Code SDK (`code_api/`, port 8000), the Next.js app Claude edits (`next_app/`, port 3001), and an Express reverse proxy on port 3000 that serves the app at `/` and the API at `/code-api`. A GitHub Actions workflow deployed it on every push to `main`. The UI that called the API is [`claude-app-builder-frontend`](https://github.com/l4j3b/claude-app-builder-frontend).
 >
 > The API has no authentication and lets Claude run shell commands. Don't deploy it as-is.
 

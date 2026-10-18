@@ -83,7 +83,7 @@ async def claude_endpoint(request: ClaudeRequest):
     """
     try:
         # Get the workspace directory (Gitpod uses /workspace)
-        project_path = Path("/loveable-hack-backend/app/src") if Path("/loveable-hack-backend/app/src").exists() else Path.cwd()
+        project_path = Path("/claude-app-builder-backend/app/src") if Path("/claude-app-builder-backend/app/src").exists() else Path.cwd()
 
         print(f"Request received: {request.prompt}")
         print(f"Project path: {project_path}")
