@@ -1,19 +1,21 @@
 # Claude App Builder: backend
 
-> **Archived.** Built in July 2025 as a proof of concept and kept here as a record. It is not maintained and does not run as-is today: the model the API requests has been retired and the Fly.io app has been deleted.
->
-> The API has no authentication and lets Claude run shell commands. Don't deploy it as-is.
+> [!WARNING]
+> ⚠️ **Archived proof of concept (July 2025).** Kept here as a record. It is not maintained and does not run as-is today: the model the API requests has been retired and the Fly.io app has been deleted.
 
-## Part of Claude App Builder
+> [!CAUTION]
+> 🚫 **Don't deploy this as-is.** The API has no authentication and lets Claude run shell commands.
 
-Claude App Builder was a Lovable-style prompt-to-app tool made of two repos that worked together:
+The workspace backend of Claude App Builder, a Lovable-style tool that built web apps from a prompt. Users worked on the website in [`claude-app-builder-frontend`](https://github.com/l4j3b/claude-app-builder-frontend). This repo ran their workspaces, where Claude Code edited and served each user's app.
+
+## How the two repos worked together
 
 | Repo | Role | Ran on |
 | --- | --- | --- |
-| [`claude-app-builder-frontend`](https://github.com/l4j3b/claude-app-builder-frontend) | The builder UI: a chat panel that streams Claude's messages (text, tool calls with their commands and file paths, tool results, and the final turn count, duration and cost) next to an iframe with a live preview of the app being built | Vercel |
-| `claude-app-builder-backend` (this repo) | The Claude Code API (FastAPI around the Claude Code SDK) and the Next.js app that Claude edits | Gitpod, then Fly.io |
+| [`claude-app-builder-frontend`](https://github.com/l4j3b/claude-app-builder-frontend) | The website and user entry point. Users describe the app they want in a chat panel that streams Claude's work (text, tool calls with their commands and file paths, tool results, and the final turn count, duration and cost), next to a live preview of their app | Vercel |
+| `claude-app-builder-backend` (this repo) | The user workspaces. A workspace runs the Claude Code API (FastAPI around the Claude Code SDK) and the user's Next.js app, which Claude edits | Gitpod, then Fly.io |
 
-A prompt typed in the frontend goes to this repo's streaming endpoint. Claude Code edits the Next.js app here, and the frontend's preview iframe, pointed at that app's dev server, shows the change.
+A user types a prompt on the website. The frontend sends it to the workspace's streaming endpoint, Claude Code edits the user's app in that workspace, and the website's preview iframe, pointed at the workspace's dev server, shows the change.
 
 ## How this repo evolved
 
